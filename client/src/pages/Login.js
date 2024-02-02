@@ -72,7 +72,7 @@ const Login = () => {
                     required
                 />
             </div>
-            <button type="submit">Register</button>
+            <button type="submit">Sign in</button>
             {error ? <span className='form-error'>{error}</span>: null}
         </form>
     )
