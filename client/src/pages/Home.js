@@ -1,7 +1,10 @@
+import { useAuthContext } from "../hooks/useAuthContext"
 
 const Home = () => {
 
-    return (<div>Home</div>)
+    const { user } = useAuthContext()
+
+    return (<div>{user.email}</div>)
 
 }
 

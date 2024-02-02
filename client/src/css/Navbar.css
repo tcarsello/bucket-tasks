@@ -1,0 +1,25 @@
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /*background-color: #333;*/
+    border-bottom: 1px solid #ccc;
+    /*color: white;*/
+    padding: 10px 20px;
+    margin-bottom: 25px;
+}
+
+.top-nav-brand {
+    font-size: 32px;
+    color: #2375cc;
+}
+
+.top-nav-links a {
+    text-decoration: none;
+    margin-left: 20px;
+    color:#2375cc;
+}
+
+.top-nav-links a:hover {
+    text-decoration: underline;
+}

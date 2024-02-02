@@ -4,23 +4,31 @@ import Login from './pages/Login.js'
 import Register from './pages/Register.js'
 import Home from './pages/Home.js'
 
+import Navbar from './components/Navbar.js'
+
+import { useAuthContext } from './hooks/useAuthContext.js'
+
 function App() {
+
+  const { user} = useAuthContext()
+
   return (
     <div className="App">
+      <Navbar />
       <BrowserRouter>
         <div id="page-container">
           <Routes>
             <Route 
               path="/"
-              element={<Home />}
+              element={ user ? <Home /> : <Navigate to="/login"/>}
             />
             <Route 
               path="/register"
-              element={<Register />}
+              element={ user ? <Navigate to="/"/> : <Register />}
             />
             <Route 
               path="/login"
-              element={<Login />}
+              element={ user ? <Navigate to="/"/> : <Login />}
             />
           </Routes>
         </div>
