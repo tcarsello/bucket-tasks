@@ -17,7 +17,7 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use('/user', userRoutes)
+app.use('/api/user', userRoutes)
 
 connectToDB().then(() => {
 
