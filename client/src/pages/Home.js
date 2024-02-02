@@ -1,10 +1,17 @@
 import { useAuthContext } from "../hooks/useAuthContext"
 
+import '../css/Home.css'
+import Leftnav from "../components/Leftnav"
+
 const Home = () => {
 
     const { user } = useAuthContext()
 
-    return (<div>{user.email}</div>)
+    return (
+        <div className='home-container'>
+            <Leftnav />
+        </div>
+    )
 
 }
 

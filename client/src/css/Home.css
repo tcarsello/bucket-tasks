@@ -1,0 +1,26 @@
+div.home-container {
+    height: 100%;
+}
+
+nav.left-nav {
+    border-right: 2px solid #ccc;
+    height: 100%;
+    max-width: 300px;
+    min-width: 200px;
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+}
+
+nav.left-nav a {
+    padding: 15px 15px 15px 15px;
+    font-size: 18px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+}
+
+nav.left-nav a:hover {
+    background-color: #ccc;
+}
