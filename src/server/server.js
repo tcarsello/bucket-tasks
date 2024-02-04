@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 
 const { connectToDB, sequelize } = require('./database.js')
 const User = require('./models/userModel.js')
+const Bucket = require('./models/bucketModel.js')
 
 const userRoutes = require('./routes/userRoutes.js')
 
