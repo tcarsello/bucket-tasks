@@ -125,10 +125,40 @@ const patchUser = async (req, res) => {
         res.status(200).json({...user.dataValues, token})
 
     } catch (error) {
-        console.log(error)
         res.status(400).json({error})
     }
 
 }
 
-module.exports = { createUser, loginUser, deleteUser, patchUser }
+const resetPassword = async (req, res) => {
+
+    try {
+
+        const { userId } = req.params
+        const { password } = req.body
+
+        if (userId != req.user.userId) throw "Wrong user"
+
+        if (!password) throw "New password must be provided"
+
+        const salt = await bcrypt.genSalt(5)
+        const passwordHash = await bcrypt.hash(password, salt)
+
+        await User.update(
+            {passwordHash},
+            {
+                where: {
+                    userId
+                }
+            }
+        )
+
+        res.status(200).json({message: 'Password updated'})
+
+    } catch (error) {
+        res.status(400).json({error})
+    }
+
+}
+
+module.exports = { createUser, loginUser, deleteUser, patchUser, resetPassword }

@@ -14,6 +14,11 @@ const SettingsComponent = () => {
     const [error, setError] = useState()
     const [workedMsg, setWorkedMsg] = useState()
 
+    const [password1, setPassword1] = useState('')
+    const [password2, setPassword2] = useState('')
+    const [errorPassword, setErrorPassword] = useState()
+    const [workedMsgPassword, setWorkedMsgPassword] = useState()
+
     const handleAccountInfoSubmit = async (e) => {
         e.preventDefault()
 
@@ -31,6 +36,7 @@ const SettingsComponent = () => {
 
         if (!response.ok) {
             setError(json.error)
+            setWorkedMsg(null)
             return
         }
 
@@ -39,6 +45,38 @@ const SettingsComponent = () => {
         localStorage.setItem('user', JSON.stringify(json))
         dispatch({type: 'LOGIN', payload: json})
         
+    }
+
+    const handleChangePasswordSubmit = async (e) => {
+        e.preventDefault()
+
+        if (password1 !== password2) {
+            setErrorPassword('Passwords do not match!')
+            return
+        } else {
+            setErrorPassword()
+        }
+
+        const bodyContent = { password: password1 }
+        const response = await fetch(`/api/user/reset/${user.userId}`, {
+            method: 'POST',
+            body: JSON.stringify(bodyContent),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }
+        })
+
+        const json = await response.json()
+
+        if (!response.ok) {
+            setErrorPassword(json.error)
+            setWorkedMsgPassword(null)
+        }
+
+        setErrorPassword(null)
+        setWorkedMsgPassword('Password Updated!')
+
     }
 
     return (<>
@@ -87,6 +125,30 @@ const SettingsComponent = () => {
             </div>
             <div className='settings-category'>
                 <h3>Account Functions</h3>
+                <form className='settings-form' onSubmit={handleChangePasswordSubmit}>
+                    <h4>Change Password</h4>
+                    <div>
+                        <label htmlFor="password">New Password</label>
+                        <input
+                            type="password"
+                            value={password1}
+                            onChange={(e) => setPassword1(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="password">Retype New Password</label>
+                        <input
+                            type="password"
+                            value={password2}
+                            onChange={(e) => setPassword2(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button type="submit">Change</button>
+                    {errorPassword ? <span className='form-error'>{errorPassword}</span>: null}
+                    {workedMsgPassword ? <span className='form-worked-msg'>{workedMsgPassword}</span>: null}
+                </form>
             </div>
         </div>
     </>)
