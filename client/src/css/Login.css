@@ -1,9 +1,10 @@
 /* Container for the form to center it on the page */
 form.login-form {
     max-width: 600px;
-    margin: 0 auto;
+    margin: 15px auto;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
 }
 
 /* Style for form divs for layout */
@@ -49,5 +50,10 @@ form.login-form button:hover {
 
 span.form-error {
     color: red;
+    margin-left: 20px;
+}
+
+span.form-worked-msg {
+    color: black;
     margin-left: 20px;
 }

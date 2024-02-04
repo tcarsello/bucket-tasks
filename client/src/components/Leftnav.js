@@ -1,15 +1,15 @@
 import '../css/Home.css'
 import { useAuthContext } from '../hooks/useAuthContext'
 
-const Leftnav = () => {
+const Leftnav = ({setChoice}) => {
 
     const { user } = useAuthContext()
     return (
         <nav className='left-nav'>
-            <a>Dashboard</a>
-            <a>Buckets</a>
-            <a>Lists</a>
-            <a>Settings</a>
+            <button onClick={() => setChoice('dashboard')}>Dashboard</button>
+            <button onClick={() => setChoice('buckets')}>Buckets</button>
+            <button onClick={() => setChoice('lists')}>Lists</button>
+            <button onClick={() => setChoice('settings')}>Settings</button>
         </nav>
     )
 

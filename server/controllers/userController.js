@@ -95,4 +95,40 @@ const deleteUser = async (req, res) => {
 
 }
 
-module.exports = { createUser, loginUser, deleteUser }
+const patchUser = async (req, res) => {
+
+    try {
+        
+        const { userId } = req.params
+        const { email, firstName, lastName } = req.body
+
+        if ( userId != req.user.userId) throw "Wrong user"
+        
+        await User.update(
+            {email, firstName, lastName},
+            {
+                where: {
+                    userId
+                }
+            }   
+        )
+
+        const user = await User.findOne({
+            where: {
+                userId
+            }
+        })
+        if (!user) throw "Error finding user"
+        const userJSON = user.toJSON()
+
+        const token = createToken(userJSON.userId)
+        res.status(200).json({...user.dataValues, token})
+
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({error})
+    }
+
+}
+
+module.exports = { createUser, loginUser, deleteUser, patchUser }
