@@ -172,9 +172,8 @@ const SettingsComponent = () => {
                     {errorPassword ? <span className='form-error'>{errorPassword}</span>: null}
                     {workedMsgPassword ? <span className='form-worked-msg'>{workedMsgPassword}</span>: null}
                 </form>
-                <h4>Permanently Delete Account</h4>
-                <span>Use this function if you want to delete you account.</span>
-                <br />
+                <h4 style={{marginBottom: '0'}}>Permanently Delete Account</h4>
+                
                 <button className='button-main' onClick={handleDeleteAccount}>Delete Account</button>
             </div>
         </div>

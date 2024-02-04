@@ -1,0 +1,14 @@
+div.bucket-details-container {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+div.bucket-details-header {
+    border-bottom: 1px solid #ccc;
+}
+
+div.bucket-details-header span {
+    margin-right: 10px;
+}
