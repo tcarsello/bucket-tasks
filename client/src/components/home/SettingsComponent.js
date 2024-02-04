@@ -79,6 +79,29 @@ const SettingsComponent = () => {
 
     }
 
+    const handleDeleteAccount = async (e) => {
+        
+        if (!window.confirm("Are you sure you want to delete your account?")) {
+            return
+        }
+
+        const bodyContent = { email: user.email }
+        const response = await fetch(`/api/user/delete`, {
+            method: 'DELETE',
+            body: JSON.stringify(bodyContent),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }
+        })
+
+        if (response.ok) {
+            localStorage.removeItem('user')
+            dispatch({type: 'LOGOUT'})
+        }
+
+    }
+
     return (<>
         <h2 className='home-content-header'>Settings</h2>
         <div id='settings-categories-container'>
@@ -145,10 +168,14 @@ const SettingsComponent = () => {
                             required
                         />
                     </div>
-                    <button type="submit">Change</button>
+                    <button type="submit">Update Password</button>
                     {errorPassword ? <span className='form-error'>{errorPassword}</span>: null}
                     {workedMsgPassword ? <span className='form-worked-msg'>{workedMsgPassword}</span>: null}
                 </form>
+                <h4>Permanently Delete Account</h4>
+                <span>Use this function if you want to delete you account.</span>
+                <br />
+                <button className='button-main' onClick={handleDeleteAccount}>Delete Account</button>
             </div>
         </div>
     </>)

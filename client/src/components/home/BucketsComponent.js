@@ -1,7 +1,9 @@
 
 const BucketsComponent = () => {
 
-    return (<p>Buckets</p>)
+    return (<>
+        <h2 className='home-content-header'>Buckets</h2>
+    </>)
 
 }
 

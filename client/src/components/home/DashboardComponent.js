@@ -1,7 +1,9 @@
 
 const DashboardComponent = () => {
 
-    return (<p>Dashboard</p>)
+    return (<>
+        <h2 className='home-content-header'>Dashboard</h2>
+    </>)
 
 }
 

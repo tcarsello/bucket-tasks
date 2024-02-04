@@ -32,7 +32,7 @@ form.login-form input {
     border-radius: 4px;
 }
 
-form.login-form button {
+form.login-form button, button.button-main {
     background-color: #2375cc;
     font-weight: bold;
     color: white;
@@ -42,9 +42,10 @@ form.login-form button {
     cursor: pointer;
     width: 20%;
     margin-top: 10px; /* Add margin-top to align with the form fields layout */
+    min-width: 140px;
   }
   
-form.login-form button:hover {
+form.login-form button:hover, button.button-main:hover {
     background-color: #0056b3;
   }
 

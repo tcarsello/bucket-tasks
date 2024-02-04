@@ -1,7 +1,9 @@
 
 const ListsComponent = () => {
 
-    return (<p>Lists</p>)
+    return (<>
+        <h2 className='home-content-header'>Lists</h2>
+    </>)
 
 }
 
