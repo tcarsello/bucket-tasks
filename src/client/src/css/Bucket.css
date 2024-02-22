@@ -12,3 +12,22 @@ div.bucket-details-header {
 div.bucket-details-header span {
     margin-right: 10px;
 }
+
+.popup-form-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    min-width: 500px;
+}

@@ -33,4 +33,21 @@ const getAllBuckets = async (req, res) => {
 
 }
 
-module.exports = { getAllBuckets }
+const createBucket = async (req, res) => {
+
+    try {
+
+        const {bucketName, description} = req.body
+
+        const bucket = await Bucket.create({ ownerId: req.user.userId, bucketName, description })
+        const bucketJSON = bucket.toJSON()
+
+        res.status(200).json(bucketJSON)
+
+    } catch (error) {
+        res.status(400).json({error})
+    }
+
+}
+
+module.exports = { getAllBuckets, createBucket }
