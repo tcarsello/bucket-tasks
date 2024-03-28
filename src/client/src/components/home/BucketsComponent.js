@@ -13,6 +13,11 @@ const BucketsComponent = () => {
     const [error, setError] = useState()
 
     const [createBucketPopupEnabled, setCreateBucketPopupEnabled] = useState(false)
+    const [reloadBucketsState, setReloadBuckets] = useState(false)
+
+    const reloadBuckets = () => {
+        setReloadBuckets(!reloadBucketsState)
+    }
 
     useEffect(() => {
 
@@ -31,7 +36,7 @@ const BucketsComponent = () => {
             setError(err)
         })
 
-    }, [user, createBucketPopupEnabled])
+    }, [reloadBucketsState, user, createBucketPopupEnabled])
 
     const renderBucketActions = () => {
 
@@ -48,13 +53,13 @@ const BucketsComponent = () => {
         { error ? <span>{error}</span> : null}
         <div style={{marginBottom: '15px'}}>
                 <div>
-                    <button className='button-main' style={{maxWidth: '10px'}}onClick={() => setCreateBucketPopupEnabled(true)}>Create a New Bucket</button>
+                    <button className='button-main' style={{maxWidth: '10px'}} onClick={() => setCreateBucketPopupEnabled(true)}>Create a New Bucket</button>
                 </div>
                 {renderBucketActions()}
             </div>
         <div style={{borderTop: '2px solid #ccc', paddingTop: '15px'}}>
             {bucketList && bucketList.map((bucket) => (
-                <BucketDetails key={bucket.bucketId} bucket={bucket}/>
+                <BucketDetails key={bucket.bucketId} bucket={bucket} triggerRender={reloadBuckets}/>
             ))}
         </div>
     </>)

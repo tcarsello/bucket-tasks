@@ -50,4 +50,44 @@ const createBucket = async (req, res) => {
 
 }
 
-module.exports = { getAllBuckets, createBucket }
+const updateBucket = async (req, res) => {
+
+    try {
+
+        const {bucketName, description} = req.body
+        const {bucketId} = req.params
+
+        const bucketOld = await Bucket.findOne({
+            where: {
+                bucketId: bucketId,
+                ownerId: req.user.userId
+            }
+        })
+        if (!bucketOld) throw "Bucket does not exist or does not belong to this user"
+
+        await Bucket.update(
+            {bucketName, description},
+            {
+                where: {
+                    bucketId: bucketId,
+                    ownerId: req.user.userId
+                }
+            }
+        )
+
+        const bucket = await Bucket.findOne({
+            where: {
+                bucketId: bucketId,
+                ownerId: req.user.userId
+            }
+        })
+
+        res.status(200).json({bucket})
+
+    } catch (error) {
+        res.status(400).json({error})
+    }
+
+}
+
+module.exports = { getAllBuckets, createBucket, updateBucket }
