@@ -118,3 +118,37 @@ export const EditBucketForm = ({onClose, bucket}) => {
     )
 
 }
+
+export const DeleteBucketForm = ({onClose, bucket}) => {
+
+    const { user } = useAuthContext()
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        
+        const response = await fetch(`/api/bucket/${bucket.bucketId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }
+        })
+
+        onClose()
+    }
+
+    return (
+        <div className="popup-form-backdrop">
+            <div className="popup-form">
+
+                <form onSubmit={handleSubmit} className='settings-form'>
+                    <h3>Delete Bucket</h3>
+                    <p>Are you sure you want to delete <strong>{bucket.bucketName}</strong>?</p>
+                    <button type="submit">Delete</button>
+                    <button style={{marginLeft: '10px'}} type="none" onClick={onClose}>Cancel</button>
+                </form>
+            </div>
+        </div>
+    )
+
+}

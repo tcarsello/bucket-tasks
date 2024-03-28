@@ -90,4 +90,33 @@ const updateBucket = async (req, res) => {
 
 }
 
-module.exports = { getAllBuckets, createBucket, updateBucket }
+const deleteBucket = async (req, res) => {
+
+    try {
+
+        const {bucketId} = req.params
+
+        const bucket = await Bucket.findOne({
+            where: {
+                bucketId,
+                ownerId: req.user.userId
+            }
+        })
+
+        if (!bucket) throw "Bucket does not exist or does not belong to this user"
+
+        await Bucket.destroy({
+            where:{
+                bucketId
+            }
+        })
+
+        res.status(200).json({bucket})
+
+    } catch (error) {
+        res.status(400).json({error})
+    }
+
+}
+
+module.exports = { getAllBuckets, createBucket, updateBucket, deleteBucket }
