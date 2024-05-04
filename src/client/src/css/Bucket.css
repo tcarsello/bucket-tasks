@@ -31,3 +31,10 @@ div.bucket-details-header span {
     border-radius: 5px;
     min-width: 500px;
 }
+
+.task-container {
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid black;
+}

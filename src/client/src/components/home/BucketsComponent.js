@@ -29,7 +29,9 @@ const BucketsComponent = () => {
             }
         }).then((response) => {
 
-            response.json().then((json) => { setBucketList(json.buckets) })
+            response.json().then((json) => { 
+                setBucketList(json.buckets) 
+            })
 
         }).catch(err => {
             console.log(err)

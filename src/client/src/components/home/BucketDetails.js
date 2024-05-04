@@ -1,16 +1,24 @@
 import '../../css/Bucket.css'
 
+import { useAuthContext } from '../../hooks/useAuthContext'
+
 import { GrEdit, GrTrash, GrAdd } from 'react-icons/gr'
 
 import { useState, useEffect } from 'react'
 
 import { EditBucketForm, DeleteBucketForm, AddTaskForm } from './BucketActions.js'
 
+import TaskDetails from './TaskDetails.js'
+
 const BucketDetails = ({ bucket, triggerRender }) => {
+
+    const { user } = useAuthContext()
 
     const [editBucketPopupEnabled, setEditBucketPopupEnabled] = useState(false)
     const [deleteBucketPopupEnabled, setDeleteBucketPopupEnabled] = useState(false)
     const [addTaskPopupEnabled, setAddTaskPopupEnabled] = useState(false)
+    const [taskList, setTaskList] = useState(null)
+    const [reloadTaskList, setReloadtaskList] = useState(false)
 
     const renderBucketEdit = () => {
         return (
@@ -33,6 +41,22 @@ const BucketDetails = ({ bucket, triggerRender }) => {
         </div>)
     }
 
+    useEffect(() => {
+        
+        fetch(`/api/task/${bucket.bucketId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }
+        }).then((response) => {
+            response.json().then((json) => {
+                setTaskList(json.tasks)
+            })
+        })
+
+    }, [user, bucket, reloadTaskList])
+
     return (
         <div className='bucket-details-container'>
             <div className='bucket-details-header'>
@@ -44,6 +68,9 @@ const BucketDetails = ({ bucket, triggerRender }) => {
             <div>
                 <button className='button-color' onClick={() => setAddTaskPopupEnabled(true)}>+ Task</button>
             </div>
+            {taskList && taskList.map((task) => (
+                <TaskDetails key={task.taskId} task={task} />
+            ))}
             {renderBucketEdit()}
         </div>
     )
