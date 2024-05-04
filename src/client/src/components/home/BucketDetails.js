@@ -1,15 +1,16 @@
 import '../../css/Bucket.css'
 
-import { GrEdit, GrTrash } from 'react-icons/gr'
+import { GrEdit, GrTrash, GrAdd } from 'react-icons/gr'
 
 import { useState, useEffect } from 'react'
 
-import { EditBucketForm, DeleteBucketForm } from './BucketActions.js'
+import { EditBucketForm, DeleteBucketForm, AddTaskForm } from './BucketActions.js'
 
 const BucketDetails = ({ bucket, triggerRender }) => {
 
     const [editBucketPopupEnabled, setEditBucketPopupEnabled] = useState(false)
     const [deleteBucketPopupEnabled, setDeleteBucketPopupEnabled] = useState(false)
+    const [addTaskPopupEnabled, setAddTaskPopupEnabled] = useState(false)
 
     const renderBucketEdit = () => {
         return (
@@ -23,6 +24,12 @@ const BucketDetails = ({ bucket, triggerRender }) => {
                     setDeleteBucketPopupEnabled(false)
                     triggerRender()
                 }}/> : null}
+
+                {addTaskPopupEnabled ? <AddTaskForm bucket={bucket} onClose={() => {
+                    setAddTaskPopupEnabled(false)
+                    triggerRender()
+                }}/>: null}
+
         </div>)
     }
 
@@ -33,8 +40,11 @@ const BucketDetails = ({ bucket, triggerRender }) => {
                 <span style={{color: 'grey', fontStyle: 'italic'}}>{bucket.description}</span>
                 <GrEdit onClick={() => setEditBucketPopupEnabled(true)}/>
                 <GrTrash style={{float: 'right'}} onClick={() => setDeleteBucketPopupEnabled(true)}/>
-                {renderBucketEdit()}
             </div>
+            <div>
+                <button className='button-color' onClick={() => setAddTaskPopupEnabled(true)}>+ Task</button>
+            </div>
+            {renderBucketEdit()}
         </div>
     )
 

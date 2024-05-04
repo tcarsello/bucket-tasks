@@ -152,3 +152,65 @@ export const DeleteBucketForm = ({onClose, bucket}) => {
     )
 
 }
+
+export const AddTaskForm = ({onClose, bucket}) => {
+
+    const { user } = useAuthContext()
+
+    const [name, setName] = useState()
+    const [description, setDescription] = useState()
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        
+        const bodyContent = {bucketId: bucket.bucketId, taskName: name, taskDescription: description}
+
+        const response = await fetch(`/api/task/`, {
+            method: 'POST',
+            body: JSON.stringify(bodyContent),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }
+
+        })
+
+        onClose()
+    }
+
+    return (
+        <div className="popup-form-backdrop">
+            <div className="popup-form">
+
+                <form onSubmit={handleSubmit} className='settings-form'>
+                    <h3>New Task</h3>
+                    <p>Create a new task in <strong>{bucket.bucketName}</strong></p>
+
+                    <div>
+                        <label>Task Name:</label>
+                        <input
+                            type="text"
+                            name="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                       />
+                    </div>
+                    <div>
+                        <label>Task Description:</label>
+                        <input
+                            type="text"
+                            name="name"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                       />
+                    </div>
+
+                    <button type="submit">Create</button>
+                    <button style={{marginLeft: '10px'}} type="none" onClick={onClose}>Cancel</button>
+                </form>
+            </div>
+        </div>
+    )
+
+}

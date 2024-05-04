@@ -9,6 +9,7 @@ const Bucket = require('./models/bucketModel.js')
 
 const userRoutes = require('./routes/userRoutes.js')
 const bucketRoutes = require('./routes/bucketRoutes.js')
+const taskRoutes = require('./routes/taskRoutes.js')
 
 const app = express()
 app.use(express.json())
@@ -21,6 +22,7 @@ app.use((req, res, next) => {
 
 app.use('/api/user', userRoutes)
 app.use('/api/bucket', bucketRoutes)
+app.use('/api/task', taskRoutes)
 
 connectToDB().then(() => {
 
