@@ -38,4 +38,28 @@ const getAllTasks = async (req, res) => {
     }
 }
 
-module.exports = { createTask, getAllTasks }
+const updateTaskStatus = async (req, res) => {
+
+    try {
+
+        const { taskId } = req.params
+        const { completed } = req.body
+
+        const task = await Task.update(
+            {completed},
+            {
+                where: {
+                    taskId
+                }
+            }
+        )
+
+        res.status(200).json(task)
+
+    } catch (error) {
+        res.status(400).json({error})
+    }
+
+}
+
+module.exports = { createTask, getAllTasks, updateTaskStatus }

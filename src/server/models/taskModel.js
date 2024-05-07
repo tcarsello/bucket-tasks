@@ -25,6 +25,10 @@ const Task = sequelize.define('Task', {
     taskDescription: {
         type: DataTypes.STRING
     },
+    completed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    }
 }, {
     tableName: 'Tasks',
     timestamps: true

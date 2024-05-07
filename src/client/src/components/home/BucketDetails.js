@@ -60,7 +60,7 @@ const BucketDetails = ({ bucket, triggerRender }) => {
     return (
         <div className='bucket-details-container'>
             <div className='bucket-details-header'>
-                <span style={{fontWeight: 'bold', fontSize: '1.1em'}}>{bucket.bucketName}</span>
+                <span style={{fontWeight: 'bold', fontSize: '1.3em'}}>{bucket.bucketName}</span>
                 <span style={{color: 'grey', fontStyle: 'italic'}}>{bucket.description}</span>
                 <GrEdit onClick={() => setEditBucketPopupEnabled(true)}/>
                 <GrTrash style={{float: 'right'}} onClick={() => setDeleteBucketPopupEnabled(true)}/>
@@ -68,6 +68,7 @@ const BucketDetails = ({ bucket, triggerRender }) => {
             <div>
                 <button className='button-color' onClick={() => setAddTaskPopupEnabled(true)}>+ Task</button>
             </div>
+            <br />
             {taskList && taskList.map((task) => (
                 <TaskDetails key={task.taskId} task={task} />
             ))}
