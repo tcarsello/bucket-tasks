@@ -20,7 +20,11 @@ const BucketDetails = ({ bucket, triggerRender }) => {
     const [clearTasksPopupEnabled, setClearTasksPopupEnabled] = useState(false)
 
     const [taskList, setTaskList] = useState(null)
-    const [reloadTaskList, setReloadtaskList] = useState(false)
+    const [reloadTaskList, setReloadTaskList] = useState(false)
+
+    const reloadTasks = () => {
+        setReloadTaskList(!reloadTaskList)
+    }
 
     const renderBucketEdit = () => {
         return (
@@ -80,7 +84,7 @@ const BucketDetails = ({ bucket, triggerRender }) => {
             </div>
             <br />
             {taskList && taskList.map((task) => (
-                <TaskDetails key={task.taskId} task={task} />
+                <TaskDetails key={task.taskId} task={task} renderFunc={reloadTasks}/>
             ))}
             {renderBucketEdit()}
         </div>

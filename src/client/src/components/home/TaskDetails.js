@@ -2,7 +2,9 @@ import '../../css/Bucket.css'
 import { useAuthContext } from '../../hooks/useAuthContext'
 import { useState } from 'react'
 
-const TaskDetails = ({task}) => {
+import { GrFormClose } from 'react-icons/gr'
+
+const TaskDetails = ({task, renderFunc}) => {
 
     const { user } = useAuthContext()
 
@@ -25,6 +27,20 @@ const TaskDetails = ({task}) => {
 
     }
 
+    const handleRemove = async (e) => {
+
+        const response = await fetch(`/api/task/${task.taskId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }
+        })
+
+        renderFunc()
+
+    }
+
     const classString = `task-container ${task.completed ? 'task-item-true' : 'task-item-false'}`
 
     return (
@@ -41,6 +57,10 @@ const TaskDetails = ({task}) => {
                 <br />
                 <span>{task.taskDescription}</span>           
             </div>
+            <GrFormClose
+                style={{float: 'right', height: '30px', width: '30px'}}
+                onClick={handleRemove}
+            />
         </div>
     )
 }

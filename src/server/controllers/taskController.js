@@ -80,4 +80,22 @@ const clearTasks = async (req, res) => {
     }
 }
 
-module.exports = { createTask, getAllTasks, updateTaskStatus, clearTasks }
+const removeTask = async (req, res) => {
+    try {
+
+        const {taskId} = req.params
+
+        await Task.destroy({
+            where: {
+                taskId
+            }
+        })
+
+        res.status(200).json({taskId})
+
+    } catch (error) {
+        res.status(400).json({error})
+    }
+}
+
+module.exports = { createTask, getAllTasks, updateTaskStatus, clearTasks, removeTask }
