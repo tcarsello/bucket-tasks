@@ -78,8 +78,6 @@ const BucketDetails = ({ bucket, triggerRender }) => {
             </div>
             <div>
                 <button className='button-color' onClick={() => setAddTaskPopupEnabled(true)}>+ Task</button>
-                <button className='button-color' style={{marginLeft: '10px'}} >Mark All Complete</button>
-                <button className='button-color' style={{marginLeft: '10px'}} >Mark All Incomplete</button>
                 <button className='button-color' style={{float: 'right'}} onClick={() => setClearTasksPopupEnabled(true)}>Clear Tasks</button>
             </div>
             <br />
