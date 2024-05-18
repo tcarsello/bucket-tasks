@@ -140,7 +140,6 @@ export const DeleteBucketForm = ({onClose, bucket}) => {
     return (
         <div className="popup-form-backdrop">
             <div className="popup-form">
-
                 <form onSubmit={handleSubmit} className='settings-form'>
                     <h3>Delete Bucket</h3>
                     <p>Are you sure you want to delete <strong>{bucket.bucketName}</strong>?</p>
@@ -213,4 +212,36 @@ export const AddTaskForm = ({onClose, bucket}) => {
         </div>
     )
 
+}
+
+export const ClearTasksForm = ({bucket, onClose}) => {
+
+    const {user} = useAuthContext()
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        const response = await fetch(`/api/task/clear/${bucket.bucketId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }
+        })
+
+        onClose()
+    }
+
+    return (
+        <div className='popup-form-backdrop'>
+            <div className='popup-form'>
+                <form onSubmit={handleSubmit} className='settings-form'>
+                    <h3>Remove All Tasks</h3>
+                    <p>Are you sure you want remove all tasks from <strong>{bucket.bucketName}</strong>?</p>
+                    <button type="submit">Remove All Tasks</button>
+                    <button style={{marginLeft: '10px'}} type="none" onClick={onClose}>Cancel</button>
+                </form>
+            </div>
+        </div>
+    )
 }

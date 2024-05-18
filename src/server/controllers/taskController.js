@@ -62,4 +62,22 @@ const updateTaskStatus = async (req, res) => {
 
 }
 
-module.exports = { createTask, getAllTasks, updateTaskStatus }
+const clearTasks = async (req, res) => {
+    try {
+
+        const { bucketId } = req.params
+
+        await Task.destroy({
+            where: {
+                bucketId
+            }
+        })
+
+        res.status(200).json({bucketId})
+
+    } catch (error) {
+        res.status(400).json({error})
+    }
+}
+
+module.exports = { createTask, getAllTasks, updateTaskStatus, clearTasks }

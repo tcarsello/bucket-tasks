@@ -6,7 +6,7 @@ import { GrEdit, GrTrash, GrAdd } from 'react-icons/gr'
 
 import { useState, useEffect } from 'react'
 
-import { EditBucketForm, DeleteBucketForm, AddTaskForm } from './BucketActions.js'
+import { EditBucketForm, DeleteBucketForm, AddTaskForm, ClearTasksForm } from './BucketActions.js'
 
 import TaskDetails from './TaskDetails.js'
 
@@ -17,6 +17,8 @@ const BucketDetails = ({ bucket, triggerRender }) => {
     const [editBucketPopupEnabled, setEditBucketPopupEnabled] = useState(false)
     const [deleteBucketPopupEnabled, setDeleteBucketPopupEnabled] = useState(false)
     const [addTaskPopupEnabled, setAddTaskPopupEnabled] = useState(false)
+    const [clearTasksPopupEnabled, setClearTasksPopupEnabled] = useState(false)
+
     const [taskList, setTaskList] = useState(null)
     const [reloadTaskList, setReloadtaskList] = useState(false)
 
@@ -35,6 +37,11 @@ const BucketDetails = ({ bucket, triggerRender }) => {
 
                 {addTaskPopupEnabled ? <AddTaskForm bucket={bucket} onClose={() => {
                     setAddTaskPopupEnabled(false)
+                    triggerRender()
+                }}/>: null}
+
+                {clearTasksPopupEnabled ? <ClearTasksForm bucket={bucket} onClose={() => {
+                    setClearTasksPopupEnabled(false)
                     triggerRender()
                 }}/>: null}
 
@@ -67,6 +74,9 @@ const BucketDetails = ({ bucket, triggerRender }) => {
             </div>
             <div>
                 <button className='button-color' onClick={() => setAddTaskPopupEnabled(true)}>+ Task</button>
+                <button className='button-color' style={{marginLeft: '10px'}} >Mark All Complete</button>
+                <button className='button-color' style={{marginLeft: '10px'}} >Mark All Incomplete</button>
+                <button className='button-color' style={{float: 'right'}} onClick={() => setClearTasksPopupEnabled(true)}>Clear Tasks</button>
             </div>
             <br />
             {taskList && taskList.map((task) => (

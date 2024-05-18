@@ -48,8 +48,11 @@ div.bucket-details-header span {
     height: 20px;
 }
 
-.task-item-false {
+.task-container:hover {
+    background-color: #eee;
+}
 
+.task-item-false {
 }
 
 .task-item-true {
