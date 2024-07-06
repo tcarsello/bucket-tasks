@@ -1,7 +1,11 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
+const { Op, Sequelize } = require('sequelize')
+
 const User = require('../models/userModel.js')
+const Bucket = require('../models/bucketModel.js')
+const Task = require('../models/taskModel.js')
 
 const createToken = (id) => {
     return jwt.sign({_id: id}, process.env.SECRET, {expiresIn: '1d'})
@@ -161,4 +165,94 @@ const resetPassword = async (req, res) => {
 
 }
 
-module.exports = { createUser, loginUser, deleteUser, patchUser, resetPassword }
+const getUserDash = async (req, res) => {
+
+    try {
+        
+        const { userId } = req.params
+
+        if (userId != req.user.userId) throw "Wrong user"
+
+        let numBuckets = 0;
+        let numActiveBuckets;
+        let numCompletedTasks;
+        let numTotalTasks;
+        let incompleteTasks;
+
+        const buckets = await Bucket.findAll({
+            where: {
+                ownerId: userId
+            }
+        })
+        numBuckets = buckets.length
+
+        const activeBuckets = await Bucket.findAll({
+            where: {
+                ownerId: userId,
+                bucketId: {
+                    [Op.notIn]: Sequelize.col('Tasks.bucketId')
+                }
+            },
+            include: [
+                {
+                    model: Task,
+                    attributes: [],
+                    required: true
+                }
+            ]
+        })
+        numActiveBuckets = activeBuckets.length
+
+        const tasks = await Task.findAll({
+            include: [
+                {
+                    model: Bucket,
+                    where: {
+                        ownerId: userId
+                    },
+                    include: [
+                        {
+                            model: User,
+                            where: {
+                                userId: userId
+                            }
+                        }
+                    ]
+                }
+            ]
+        })
+        numTotalTasks = tasks.length
+
+        incompleteTasks = await Task.findAll({
+            include: [
+                {
+                    model: Bucket,
+                    where: {
+                        ownerId: userId
+                    },
+                    include: [
+                        {
+                            model: User,
+                            where: {
+                                userId: userId
+                            }
+                        }
+                    ]
+                }
+            ],
+            where: {
+                completed: false
+            }
+        })
+        numCompletedTasks = numTotalTasks - incompleteTasks.length
+
+        res.status(200).json({numBuckets, numActiveBuckets, numCompletedTasks, numTotalTasks, incompleteTasks})
+
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({error})
+    }
+
+}
+
+module.exports = { createUser, loginUser, deleteUser, patchUser, resetPassword, getUserDash}

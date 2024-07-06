@@ -1,8 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize')
 const { sequelize } = require('../database.js')
 
-const { User } = require('./userModel.js')
-const { Bucket } = require('./bucketModel.js')
+const User = require('./userModel.js')
+const Bucket = require('./bucketModel.js')
 
 const Task = sequelize.define('Task', {
     taskId: {
@@ -33,5 +33,8 @@ const Task = sequelize.define('Task', {
     tableName: 'Tasks',
     timestamps: true
 })
+
+Bucket.hasMany(Task, {foreignKey: 'bucketId'})
+Task.belongsTo(Bucket, {foreignKey: 'bucketId'})
 
 module.exports = Task

@@ -1,0 +1,50 @@
+.dash-container {
+
+}
+
+.dash-card-row{
+    display: flex;
+}
+
+.dash-card {
+    flex: 1;
+    min-width: 200px;
+    margin-right: 10px;
+    margin-top: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.dash-top-card {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.dash-top-card span {
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.task-table {
+    width: 100%;
+}
+
+.task-table tr {
+    text-align: left;
+    line-height: 25px;
+}
+
+.task-table-col1 {
+    width: 25%;
+}
+
+.task-table-col2 {
+    width: 60%;
+}
+
+.task-table-col3 {
+    width: 15%;
+}
