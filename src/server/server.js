@@ -6,10 +6,13 @@ const bodyParser = require('body-parser')
 const { connectToDB, sequelize } = require('./database.js')
 const User = require('./models/userModel.js')
 const Bucket = require('./models/bucketModel.js')
+const List = require('./models/listModel.js')
+const ListEntry = require('./models/listEntryModel.js')
 
 const userRoutes = require('./routes/userRoutes.js')
 const bucketRoutes = require('./routes/bucketRoutes.js')
 const taskRoutes = require('./routes/taskRoutes.js')
+const listRoutes = require('./routes/listRoutes.js')
 
 const app = express()
 app.use(express.json())
@@ -23,6 +26,7 @@ app.use((req, res, next) => {
 app.use('/api/user', userRoutes)
 app.use('/api/bucket', bucketRoutes)
 app.use('/api/task', taskRoutes)
+app.use('/api/list', listRoutes)
 
 connectToDB().then(() => {
 
