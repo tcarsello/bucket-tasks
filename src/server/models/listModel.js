@@ -31,5 +31,6 @@ const List = sequelize.define('List', {
 })
 
 List.belongsTo(User, {foreignKey: 'ownerId'})
+List.hasMany(Bucket, {})
 
 module.exports = List
