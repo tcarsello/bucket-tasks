@@ -54,11 +54,11 @@ const BucketsComponent = () => {
         <h2 className='home-content-header'>Buckets</h2>
         { error ? <span>{error}</span> : null}
         <div style={{marginBottom: '15px'}}>
-                <div>
-                    <button className='button-main' style={{maxWidth: '10px'}} onClick={() => setCreateBucketPopupEnabled(true)}>Create a New Bucket</button>
-                </div>
-                {renderBucketActions()}
+            <div>
+                <button className='button-main' style={{maxWidth: '10px'}} onClick={() => setCreateBucketPopupEnabled(true)}>Create a New Bucket</button>
             </div>
+            {renderBucketActions()}
+        </div>
         <div style={{borderTop: '2px solid #ccc', paddingTop: '15px'}}>
             {bucketList && bucketList.map((bucket) => (
                 <BucketDetails key={bucket.bucketId} bucket={bucket} triggerRender={reloadBuckets}/>
