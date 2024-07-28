@@ -122,7 +122,7 @@ const deleteList = async (req, res) => {
     }
 }
 
-const attachBucketToList = async (req, res) => {
+const attachBucketsToList = async (req, res) => {
     try {
 
         res.status(200).json()
@@ -131,13 +131,4 @@ const attachBucketToList = async (req, res) => {
     }
 }
 
-const detachBucketFromList = async (req, res) => {
-    try {
-
-        res.status(200).json()
-    } catch (error) {
-        res.status(400).json({error})
-    }
-}
-
-module.exports = { getAllLists, createList, updateList, deleteList, attachBucketToList, detachBucketFromList }
+module.exports = { getAllLists, createList, updateList, deleteList, attachBucketsToList }

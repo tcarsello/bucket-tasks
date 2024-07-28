@@ -3,6 +3,8 @@ import { useAuthContext } from "../../hooks/useAuthContext"
 import { useState, useEffect } from 'react'
 import { CreateListForm } from './ListsActions.js'
 
+import ListDetails from "./ListDetails.js"
+
 const ListsComponent = () => {
 
     const { user } = useAuthContext()
@@ -33,7 +35,7 @@ const ListsComponent = () => {
 
     }, [reloadListState, user, createListPopupEnabled])
 
-    const relaodLists = () => {
+    const reloadLists = () => {
         setReloadListState(!reloadListState)
     }
 
@@ -53,6 +55,11 @@ const ListsComponent = () => {
                 <button className='button-main' style={{maxWidth: '10px'}} onClick={() => setCreateListPopupEnabled(true)}>Create a New List</button>
             </div>
             {renderListActions()}
+        </div>
+        <div style={{borderTop: '2px solid #ccc', paddingTop: '15px'}}>
+            {lists && lists.map((list) => (
+                <ListDetails key={list.listId} list={list} triggerRender={reloadLists}/>
+            ))}
         </div>
     </>)
 
