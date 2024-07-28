@@ -3,6 +3,8 @@ const User = require('../models/userModel.js')
 const List = require('../models/listModel.js')
 const ListEntry = require('../models/listEntryModel.js')
 
+const { Op } = require('sequelize');
+
 const getAllLists = async (req, res) => {
     try {
 
@@ -123,12 +125,81 @@ const deleteList = async (req, res) => {
 }
 
 const attachBucketsToList = async (req, res) => {
+
     try {
 
-        res.status(200).json()
+        const { listId } = req.params
+        const { buckets } = req.body
+
+        const list = await List.findOne({
+            where: {
+                listId,
+                ownerId: req.user.userId
+            }
+        })
+
+        if (!list) throw "List doe snot exist or does not belong to this user"
+        
+        await ListEntry.destroy({
+            where: {
+                listId: list.listId
+            }
+        })
+
+        const bucketList = await Bucket.findAll({
+            where: {
+                ownerId: req.user.userId,
+                bucketId: {
+                    [Op.in]: buckets
+                }
+            }
+        })
+
+        bucketList.forEach(b => {
+            const newentry = ListEntry.create({listId: list.listId, bucketId: b.bucketId})
+        })
+
+        res.status(200).json({bucketList})
     } catch (error) {
         res.status(400).json({error})
     }
 }
 
-module.exports = { getAllLists, createList, updateList, deleteList, attachBucketsToList }
+const getListBuckets = async (req, res) => {
+    try {
+
+        const { listId } = req.params
+
+        const list = await List.findOne({
+            where: {
+                listId,
+                ownerId: req.user.userId
+            }
+        })
+
+        if (!list) throw "List doe snot exist or does not belong to this user"
+        
+        const entries = await ListEntry.findAll({
+            where: {
+                listId: list.listId
+            }
+        })
+
+        const bucketIds = entries.map(entry => entry.bucketId)
+
+        const buckets = await Bucket.findAll({
+            where: {
+                bucketId: {
+                    [Op.in]: bucketIds
+                },
+                ownerId: req.user.userId
+            }
+        })
+
+        res.status(200).json({buckets})
+    } catch (error) {
+        res.status(400).json({error})
+    }
+}
+
+module.exports = { getAllLists, createList, updateList, deleteList, attachBucketsToList, getListBuckets }

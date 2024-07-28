@@ -1,8 +1,9 @@
 import { useAuthContext } from "../../hooks/useAuthContext"
 
 import { GrEdit, GrTrash, GrAdd } from 'react-icons/gr'
-import { useState, userEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { EditListForm, DeleteListForm } from "./ListsActions"
+import Collapsible from "../Collapsible"
 
 const ListDetails = ({ list, triggerRender }) => {
     
@@ -13,7 +14,31 @@ const ListDetails = ({ list, triggerRender }) => {
     const [manageBucketsPopupEnabled, setManageBucketsPopupEnabled] = useState(false)
 
     const [taskList, setTaskList] = useState(null)
+    const [bucketList, setBucketList] = useState(null)
+    const [reloadBucketList, setReloadBucketList] = useState(null)
     const [reloadTaskList, setReloadTaskList] = useState(false)
+
+    useEffect(() => {
+
+        fetch(`/api/list/${list.listId}/buckets`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }
+        }).then(response => {
+            response.json().then(json => {
+                setBucketList(json.buckets)
+            })
+        })
+
+    }, [user, list, reloadBucketList])
+
+    useEffect(() => {
+        
+
+
+    }, [bucketList])
 
     const reloadTasks = () => {
         setReloadTaskList(!reloadTaskList)
@@ -45,6 +70,23 @@ const ListDetails = ({ list, triggerRender }) => {
             </div>
             <div>
                 <button className='button-color' onClick={() => setManageBucketsPopupEnabled(true)}>Manage List Buckets</button>
+            </div>
+            <div >
+                <Collapsible title={`${bucketList ? bucketList.length : 0} buckets`}>
+                    {bucketList ?
+                        <ul style={{margin: 0}}>
+                            {bucketList.map(bucket => {
+                                return (
+                                    <li style={{paddingBottom: '5px'}}>
+                                        <span style={{color: '#2375cc', fontWeight: 'bold'}}>{bucket.bucketName}</span>
+                                        <span style={{color: 'gray', fontStyle: 'italic'}}> - {bucket.description}</span>
+                                    </li>
+                                )
+                            })} 
+                        </ul>
+                        : null
+                    }
+                </Collapsible>
             </div>
             {renderListEdit()}
         </div>

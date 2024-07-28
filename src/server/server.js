@@ -7,7 +7,6 @@ const { connectToDB, sequelize } = require('./database.js')
 const User = require('./models/userModel.js')
 const Bucket = require('./models/bucketModel.js')
 const List = require('./models/listModel.js')
-const ListEntry = require('./models/listEntryModel.js')
 
 const userRoutes = require('./routes/userRoutes.js')
 const bucketRoutes = require('./routes/bucketRoutes.js')

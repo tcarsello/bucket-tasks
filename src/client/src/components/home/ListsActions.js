@@ -13,7 +13,7 @@ export const CreateListForm = ({onClose}) => {
         e.preventDefault()
 
         const bodyContent = { userId: user.userId, listName, description: listDescription }
-        const response = fetch(`/api/list`, {
+        const response = await fetch(`/api/list`, {
             method: 'POST',
             body: JSON.stringify(bodyContent),
             headers: {
@@ -73,7 +73,7 @@ export const EditListForm = ({onClose, list}) => {
         e.preventDefault()
 
         const bodyContent = { listName, description: listDescription }
-        const response = fetch(`/api/list/${list.listId}`, {
+        const response = await fetch(`/api/list/${list.listId}`, {
             method: 'PATCH',
             body: JSON.stringify(bodyContent),
             headers: {
