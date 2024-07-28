@@ -126,8 +126,8 @@ const ListDetails = ({ list, triggerRender }) => {
                             {taskList.filter(task => !task.completed).map(task => (
                                 <tr>
                                     <td class="task-table-col1">{task.taskName}</td>
-                                    <td class="task-table-col2">{task.taskDescription}</td>
-                                    <td class="task-table-col3">{task.bucketName}</td>
+                                    <td class="task-table-col2" style={{color: 'grey'}}>{task.taskDescription}</td>
+                                    <td class="task-table-col3" style={{color: '#2375cc', fontWeight: 'bold'}}>{task.bucketName}</td>
                                 </tr>
                             ))}
                         </table>
