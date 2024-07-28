@@ -11,7 +11,6 @@ router.patch('/:listId', requireAuth, updateList)
 router.delete('/:listId', requireAuth, deleteList)
 
 router.post('/:listId/attach', requireAuth, attachBucketsToList)
-
 router.get('/:listId/buckets', requireAuth, getListBuckets)
 
 module.exports = router

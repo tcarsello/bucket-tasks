@@ -18,4 +18,5 @@
 
 .collapsible .collapsible-content.open {
     max-height: 500px; /* Adjust based on content height */
+    padding-left: 20px;
 }
